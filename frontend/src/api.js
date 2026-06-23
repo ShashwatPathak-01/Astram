@@ -1,14 +1,17 @@
 // Thin API client for the FastAPI backend. All paths are relative so the Vite
 // dev proxy (or same-origin deploy) routes them to the Python service.
 
+const API_BASE =
+  import.meta.env.VITE_API_URL || '';
+
 async function jget(path) {
-  const r = await fetch(path)
+  const r = await fetch(`${API_BASE}${path}`)
   if (!r.ok) throw new Error(`${path} -> ${r.status}`)
   return r.json()
 }
 
 async function jpost(path, body) {
-  const r = await fetch(path, {
+  const r = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
