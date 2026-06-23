@@ -15,5 +15,5 @@ frontend/.env
 # OS
 .DS_Store
 
-
+frontend/repomix-output.xml
 notebook/
