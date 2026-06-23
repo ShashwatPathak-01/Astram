@@ -27,7 +27,6 @@ export function loadMapplsSdk() {
         `https://apis.mappls.com/advancedmaps/api/${access_token}` +
         `/map_sdk?layer=vector&v=3.0&callback=${cbName}`
       script.async = true
-      script.defer = true
       script.onerror = () => reject(new Error('Failed to load Mappls SDK script'))
       document.head.appendChild(script)
     })

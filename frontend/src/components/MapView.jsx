@@ -26,39 +26,59 @@ export default function MapView({ events, picked, onPick }) {
 
   // Initialise the map once.
   useEffect(() => {
-    let cancelled = false
-    loadMapplsSdk()
-      .then((mappls) => {
-        if (cancelled) return
-        const map = new mappls.Map(mapDivRef.current, {
-          center: BENGALURU,
-          zoom: 11,
-        })
-        mapRef.current = map
-        const ready = () => {
-          if (cancelled) return
-          setStatus('ready')
-          // Let the user pick a location by clicking the map.
-          try {
-            map.addListener('click', (e) => {
-              const ll = e.lngLat || e.latlng || {}
-              const lat = ll.lat ?? (Array.isArray(ll) ? ll[1] : undefined)
-              const lng = ll.lng ?? (Array.isArray(ll) ? ll[0] : undefined)
-              if (lat != null && lng != null) onPick({ lat, lng })
-            })
-          } catch (_) { /* listener API differences are non-fatal */ }
+  let cancelled = false
+
+  const initMap = (mappls) => {
+    if (cancelled || !mapDivRef.current) return
+    const container = mapDivRef.current
+    // Guard: Mappls SDK throws "Map container not defined" if the div
+    // has zero dimensions. Wait until it's actually painted.
+    if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+      const ro = new ResizeObserver((_, obs) => {
+        if (container.offsetWidth > 0 && container.offsetHeight > 0) {
+          obs.disconnect()
+          createMap(mappls, container)
         }
-        try { map.addListener('load', ready) } catch (_) { ready() }
-        // Safety net in case the load event never fires.
-        setTimeout(ready, 1500)
       })
-      .catch((err) => {
-        if (cancelled) return
-        setError(String(err.message || err))
-        setStatus('error')
-      })
-    return () => { cancelled = true }
-  }, [])
+      ro.observe(container)
+      return () => ro.disconnect()
+    }
+    createMap(mappls, container)
+  }
+
+  const createMap = (mappls, container) => {
+    if (cancelled) return
+    const map = new mappls.Map(container, {
+      center: BENGALURU,
+      zoom: 11,
+    })
+    mapRef.current = map
+    const ready = () => {
+      if (cancelled) return
+      setStatus('ready')
+      try {
+        map.addListener('click', (e) => {
+          const ll = e.lngLat || e.latlng || {}
+          const lat = ll.lat ?? (Array.isArray(ll) ? ll[1] : undefined)
+          const lng = ll.lng ?? (Array.isArray(ll) ? ll[0] : undefined)
+          if (lat != null && lng != null) onPick({ lat, lng })
+        })
+      } catch (_) {}
+    }
+    try { map.addListener('load', ready) } catch (_) { ready() }
+    setTimeout(ready, 1500)
+  }
+
+  loadMapplsSdk()
+    .then(initMap)
+    .catch((err) => {
+      if (cancelled) return
+      setError(String(err.message || err))
+      setStatus('error')
+    })
+
+  return () => { cancelled = true }
+}, [])
 
   // Draw / refresh historical-event markers whenever data or readiness changes.
   useEffect(() => {
@@ -109,7 +129,7 @@ export default function MapView({ events, picked, onPick }) {
 
   return (
     <div className="map-wrap">
-      <div ref={mapDivRef} className="map" />
+      <div id='map' ref={mapDivRef} className="map" />
       {status !== 'ready' && (
         <div className="map-overlay">
           {status === 'loading' && <p>Loading Mappls map…</p>}
