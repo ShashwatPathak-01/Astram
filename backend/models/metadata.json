@@ -1,0 +1,270 @@
+{
+  "features": {
+    "all": [
+      "event_type",
+      "event_cause",
+      "priority",
+      "veh_type",
+      "corridor",
+      "zone",
+      "latitude",
+      "longitude",
+      "hour",
+      "day_of_week",
+      "month",
+      "is_weekend",
+      "is_peak_hour",
+      "is_night",
+      "has_junction"
+    ],
+    "categorical": [
+      "event_type",
+      "event_cause",
+      "priority",
+      "veh_type",
+      "corridor",
+      "zone"
+    ],
+    "numeric": [
+      "latitude",
+      "longitude",
+      "hour",
+      "day_of_week",
+      "month",
+      "is_weekend",
+      "is_peak_hour",
+      "is_night",
+      "has_junction"
+    ]
+  },
+  "category_vocab": {
+    "event_type": [
+      "planned",
+      "unplanned"
+    ],
+    "event_cause": [
+      "Debris",
+      "Fog / Low Visibility",
+      "accident",
+      "congestion",
+      "construction",
+      "debris",
+      "others",
+      "pot_holes",
+      "procession",
+      "protest",
+      "public_event",
+      "road_conditions",
+      "test_demo",
+      "tree_fall",
+      "vehicle_breakdown",
+      "vip_movement",
+      "water_logging"
+    ],
+    "priority": [
+      "High",
+      "Low"
+    ],
+    "veh_type": [
+      "auto",
+      "bmtc_bus",
+      "heavy_vehicle",
+      "ksrtc_bus",
+      "lcv",
+      "others",
+      "private_bus",
+      "private_car",
+      "taxi",
+      "truck"
+    ],
+    "corridor": [
+      "Airport New South Road",
+      "Bannerghata Road",
+      "Bellary Road 1",
+      "Bellary Road 2",
+      "CBD 1",
+      "CBD 2",
+      "Hennur Main Road",
+      "Hosur Road",
+      "IRR(Thanisandra road)",
+      "Magadi Road",
+      "Mysore Road",
+      "Non-corridor",
+      "ORR East 1",
+      "ORR East 2",
+      "ORR North 1",
+      "ORR North 2",
+      "ORR West 1",
+      "Old Airport Road",
+      "Old Madras Road",
+      "Tumkur Road",
+      "Varthur Road",
+      "West of Chord Road"
+    ],
+    "zone": [
+      "Central Zone 1",
+      "Central Zone 2",
+      "East Zone 1",
+      "East Zone 2",
+      "North Zone 1",
+      "North Zone 2",
+      "South Zone 1",
+      "South Zone 2",
+      "West Zone 1",
+      "West Zone 2"
+    ]
+  },
+  "regression": {
+    "best_model": "grad_boost",
+    "candidates": {
+      "linear": {
+        "mae_minutes": 65.26,
+        "r2": 0.0792
+      },
+      "random_forest": {
+        "mae_minutes": 64.38,
+        "r2": 0.121
+      },
+      "grad_boost": {
+        "mae_minutes": 63.37,
+        "r2": 0.1107
+      }
+    }
+  },
+  "classification": {
+    "best_model": "random_forest",
+    "candidates": {
+      "logreg": {
+        "roc_auc": 0.7596,
+        "f1": 0.3146
+      },
+      "random_forest": {
+        "roc_auc": 0.7984,
+        "f1": 0.4254
+      },
+      "grad_boost": {
+        "roc_auc": 0.7872,
+        "f1": 0.3429
+      }
+    }
+  },
+  "duration_quantiles_min": {
+    "0.5": 46.1,
+    "0.75": 85.4,
+    "0.9": 143.4
+  },
+  "analytics": {
+    "total_events": 8173,
+    "by_event_type": {
+      "unplanned": 7706,
+      "planned": 467
+    },
+    "by_event_cause": {
+      "vehicle_breakdown": 4896,
+      "others": 638,
+      "pot_holes": 537,
+      "construction": 480,
+      "water_logging": 458,
+      "accident": 365,
+      "tree_fall": 284,
+      "road_conditions": 170,
+      "congestion": 136,
+      "public_event": 84,
+      "procession": 72,
+      "vip_movement": 20,
+      "protest": 15,
+      "Debris": 12,
+      "test_demo": 3,
+      "Fog / Low Visibility": 2,
+      "debris": 1
+    },
+    "by_corridor": {
+      "Non-corridor": 3124,
+      "Mysore Road": 743,
+      "Bellary Road 1": 610,
+      "Tumkur Road": 458,
+      "Bellary Road 2": 379,
+      "Hosur Road": 298,
+      "ORR North 1": 275,
+      "Old Madras Road": 263,
+      "Magadi Road": 245,
+      "ORR East 1": 244,
+      "ORR North 2": 235,
+      "Bannerghata Road": 209,
+      "ORR East 2": 187,
+      "West of Chord Road": 174,
+      "ORR West 1": 168,
+      "CBD 2": 104,
+      "Hennur Main Road": 96,
+      "IRR(Thanisandra road)": 95,
+      "Varthur Road": 77,
+      "Old Airport Road": 76,
+      "Airport New South Road": 67,
+      "CBD 1": 26
+    },
+    "by_zone": {
+      "Central Zone 2": 623,
+      "West Zone 1": 433,
+      "North Zone 2": 413,
+      "West Zone 2": 358,
+      "South Zone 2": 354,
+      "North Zone 1": 318,
+      "Central Zone 1": 269,
+      "East Zone 1": 253,
+      "South Zone 1": 233,
+      "East Zone 2": 190
+    },
+    "top_junctions": {
+      "MekhriCircle": 64,
+      "AyyappaTempleJunc": 49,
+      "SatteliteBusStandJunc": 43,
+      "YeshwanthpuraCircle": 38,
+      "YelhankaCircle": 34,
+      "SilkBoardJunc": 33,
+      "toll gate mysore road": 33,
+      "JalahalliCross(SM Circle)": 32,
+      "Nagavara-ORR Junction": 32,
+      "K R Circle": 31,
+      "KIMCO Junction": 31,
+      "VeerannapalyaJunction(BEL,HO)": 30,
+      "TownhallJunction": 30,
+      "HesaraghattaJunction": 30,
+      "Devasandra(k r puram)": 30
+    },
+    "top_police_stations": {
+      "Yelahanka": 377,
+      "HAL Old Airport": 361,
+      "Sadashivanagar": 302,
+      "Byatarayanapura": 297,
+      "Halasuru Gate": 297,
+      "Yeshwanthpura": 280,
+      "Hennuru": 276,
+      "Kodigehalli": 272,
+      "Banaswadi": 245,
+      "K.R. Pura": 228,
+      "Kamakshipalya": 224,
+      "No Police Station": 219,
+      "Cubbon Park": 212,
+      "Jalahalli": 197,
+      "Chamarajpet": 192
+    },
+    "corridor_median_clearance_min": {
+      "Hennur Main Road": 78.4,
+      "Airport New South Road": 64.5,
+      "Old Airport Road": 61.5,
+      "CBD 2": 60.3,
+      "Hosur Road": 57.6,
+      "ORR West 1": 57.3,
+      "ORR North 1": 51.1,
+      "Bellary Road 2": 50.7,
+      "IRR(Thanisandra road)": 49.2,
+      "Non-corridor": 48.9,
+      "Magadi Road": 48.6,
+      "ORR North 2": 47.2,
+      "Varthur Road": 46.9,
+      "CBD 1": 44.9,
+      "Bellary Road 1": 42.3
+    },
+    "road_closure_rate": 0.0827
+  }
+}

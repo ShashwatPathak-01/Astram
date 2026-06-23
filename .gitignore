@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+backend/.env
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+
+notebook/

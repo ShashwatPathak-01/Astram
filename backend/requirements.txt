@@ -1,0 +1,9 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pandas
+numpy
+scikit-learn
+joblib
+requests
+pydantic>=2
+python-dotenv
